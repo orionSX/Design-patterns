@@ -143,3 +143,25 @@ puts "Min element (while): #{min_element_while(array)}"
 puts first_positive_element_index_for(array).nil? ? "There's no positive elements in array":"Index of first positive element is #{first_positive_element_index_for(array)}"
 puts first_positive_element_index_while(array).nil? ? "There's no positive elements in array":"Index of first positive element is #{first_positive_element_index_while(array)}"
 
+puts "Enter id of method and filename with args"
+input=STDIN.gets.chomp
+method_id,file_name=input.split[0].to_i,input.split[1]
+file=File.open(file_name)
+file_data=file.readlines
+number=file_data[0].to_i
+array=file_data[1].split.map {|el| el.to_i}
+
+case method_id
+	when 1
+		puts "Amount of numbers less than #{number} and coprimed with it is #{coprimes_amount(number)}"
+	when 2
+		puts "Summ of digits which are divided by 3 is #{sum_of_digits_divided_by_3(number)}"
+	when 3
+		puts "Divisor which is coprimed with the most of amount of digits is #{divisor_coprimed_with_max_digits_amount(number)}"
+	else puts "ID's vary from 1 to 3 only sir"
+end
+
+puts "Min element: #{min_element_while(array)}"
+puts first_positive_element_index_for(array).nil? ? "There's no positive elements in array":"Index of first positive element is #{first_positive_element_index_for(array)}"
+
+file.close
