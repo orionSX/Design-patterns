@@ -85,3 +85,61 @@ entered_number=STDIN.gets.chomp.to_i
 puts "Amount of numbers less than #{entered_number} and coprimed with it is #{coprimes_amount(entered_number)}"
 puts "Summ of digits which are divided by 3 is #{sum_of_digits_divided_by_3(entered_number)}"
 puts "Divisor which is coprimed with the most of amount of digits is #{divisor_coprimed_with_max_digits_amount(entered_number)}"
+
+
+def min_element_for(arr)
+  min = arr[0] 
+  for i in 1...arr.size
+    min = arr[i] if arr[i] < min
+  end
+  min
+end
+
+
+def first_positive_element_index_for(arr)
+  index = nil
+  for i in 0...arr.size
+    if arr[i] > 0
+      index = i
+      break
+    end
+  end
+  index
+end
+
+def min_element_while(arr)
+  min = arr[0]
+  i = 1
+  while i < arr.size
+    min = arr[i] if arr[i] < min
+    i += 1
+  end
+  min
+end
+
+
+def first_positive_element_index_while(arr)
+  index = nil
+  i = 0
+  while i < arr.size
+    if arr[i] > 0
+      index = i
+      break
+    end
+    i += 1
+  end
+  index
+end
+
+puts "Enter array:"
+
+array=STDIN.gets.chomp.split.map {|el| el.to_i}
+
+
+puts "Min element (for): #{min_element_for(array)}"
+puts "Min element (while): #{min_element_while(array)}"
+
+
+puts first_positive_element_index_for(array).nil? ? "There's no positive elements in array":"Index of first positive element is #{first_positive_element_index_for(array)}"
+puts first_positive_element_index_while(array).nil? ? "There's no positive elements in array":"Index of first positive element is #{first_positive_element_index_while(array)}"
+
