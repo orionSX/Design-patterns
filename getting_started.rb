@@ -32,3 +32,56 @@ if system(os_command)
 else
 	puts "Something went wrong"
 end
+
+#euclid's algorythm for greatest divisor, if its 1 they're coprime
+def euclid(x,y)
+	while y!=0
+		x,y = y,x%y
+	end
+	x
+end
+
+#going from 1 to n not included and counting if greatest divisor is 1
+def coprimes_amount(n)
+	counter=0
+	(1...n).each {|number| counter+=1 if euclid(number,n)==1}	
+	counter
+end
+
+
+def sum_of_digits_divided_by_3(n)
+	sum=0
+	n.to_s.chars.each {|char| sum+=char.to_i if char.to_i%3==0}
+	sum
+end
+
+#going through all divisors, per iteration counting amount of digits with divisor coprimed which
+#but it makes no sense because it will always return 1, so we probably should be asked about divisors
+#different from 1 but solution wouldnt differ too much, we'd have to check if there's none of the
+#divisors we're looking for
+def divisor_coprimed_with_max_digits_amount(n)
+	divisors = (1..n).select {|number| n%number ==0}
+	
+	digits=n.to_s.chars.map{ |char| char.to_i }
+	
+	longest_count=0
+	best_divisor=0
+	
+	divisors.each do |div|
+		coprimed_count = digits.count {|digit| euclid(digit,div)==1}
+		if coprimed_count > longest_count
+			longest_count = coprimed_count
+			best_divisor=div
+		end
+	end
+	
+	best_divisor
+
+end
+
+puts "Enter the number you want to test methods on:"
+entered_number=STDIN.gets.chomp.to_i
+
+puts "Amount of numbers less than #{entered_number} and coprimed with it is #{coprimes_amount(entered_number)}"
+puts "Summ of digits which are divided by 3 is #{sum_of_digits_divided_by_3(entered_number)}"
+puts "Divisor which is coprimed with the most of amount of digits is #{divisor_coprimed_with_max_digits_amount(entered_number)}"
