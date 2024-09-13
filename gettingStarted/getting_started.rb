@@ -4,6 +4,7 @@ user_name=ARGV[0]
 
 puts "Hello, #{user_name.capitalize}!\nWhat is your favourite programming language?"
 
+
 favourite_language=STDIN.gets.chomp.downcase
 
 case favourite_language
@@ -143,9 +144,9 @@ puts "Min element (while): #{min_element_while(array)}"
 puts first_positive_element_index_for(array).nil? ? "There's no positive elements in array":"Index of first positive element is #{first_positive_element_index_for(array)}"
 puts first_positive_element_index_while(array).nil? ? "There's no positive elements in array":"Index of first positive element is #{first_positive_element_index_while(array)}"
 
-puts "Enter id of method and filename with args"
-input=STDIN.gets.chomp
-method_id,file_name=input.split[0].to_i,input.split[1]
+puts "\nOUTPUT FROM ARGV(index,filename)\n"
+
+method_id,file_name=ARGV[1].to_i,ARGV[2]
 file=File.open(file_name)
 file_data=file.readlines
 number=file_data[0].to_i
@@ -165,3 +166,4 @@ puts "Min element: #{min_element_while(array)}"
 puts first_positive_element_index_for(array).nil? ? "There's no positive elements in array":"Index of first positive element is #{first_positive_element_index_for(array)}"
 
 file.close
+
