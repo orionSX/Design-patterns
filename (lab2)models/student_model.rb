@@ -13,17 +13,41 @@ module StudentValidator
   end
 end
 
-class Student
+class StudentBase
   include StudentValidator
-  @@id = 0
+
+
+  def initialize(id:nil)
+    @id=id.to_i
+  end
+  
+  def validate
+    s=instance_variables.map do |key|
+      val = instance_variable_get(key)
+      key_name = key.to_s.delete_prefix('@')
+      if key_name=="contact"||key_name=='phone'||key_name=='email'||key_name=='tg' && !val.to_s.empty?
+        
+        val
+      else
+          nil
+      end
+    end.compact.join("")
+
+    !@git.nil? &&( s.length!=0)
+  end
+end
+
+
+class Student < StudentBase 
 
   attr_reader :id, :email, :phone, :tg, :git
 
-  def initialize(first_name:, surname:, last_name:,phone: nil, tg: nil, git: nil, email: nil)
+  def initialize(id:nil,first_name:, surname:, last_name:,phone: nil, tg: nil, git: nil, email: nil)
+    super(id:id)
     set_fio(first_name, surname, last_name)
     set_contacts(phone: phone, tg: tg, git: git, email: email)
-    @id = @@id
-    @@id += 1
+    
+
   end
 
   def to_s
@@ -34,10 +58,7 @@ class Student
     end.compact.join("\n")
   end
 
-  def validate
-    (valid?(@git, GIT_REGEX) && !@git.nil?) &&
-    (valid?(@email, EMAIL_REGEX) && !@email.nil? || valid?(@phone, PHONE_REGEX) && !@phone.nil? || valid?(@tg, TG_REGEX) && !@tg.nil?)
-  end
+ 
  
   def set_contacts(phone: nil , tg: nil, git:nil, email:nil)
     set_attribute(:phone, phone) if phone
@@ -46,6 +67,24 @@ class Student
     set_attribute(:email, email) if email
   end
 
+  def get_info
+    fio = "#{@surname} #{initials}"
+    git_info = git.nil? ? "Github is not set" : "GitHub: #{@git}" 
+    contact_info = get_contact
+
+    "#{fio}\t#{git_info}\t#{contact_info}"
+  end
+
+  def initials
+    "#{@first_name[0]}.#{@last_name[0]}."
+  end
+
+  def get_contact
+    return "Phone: #{@phone}" if @phone 
+    return "Email: #{@email}" if @email 
+    return "Telegram: #{@tg}" if @tg 
+    ""
+  end
   private
 
   def set_attribute(attr_name, value)
@@ -79,4 +118,27 @@ class Student
 
  
  
+end
+
+class StudentShort < StudentBase
+  attr_reader :id, :fio, :git, :contact
+
+  def initialize(student: nil, id: nil, student_str: nil)
+    
+    if student      
+      super(id:student.id)
+      short_setter(student.get_info)
+    elsif id && student_info
+      super(id:id)
+      short_setter(student_str)
+    end
+  end
+
+  def short_setter(info)
+    info_arr=info.split("\t")
+
+    @fio=info_arr[0]
+    @git=info_arr[1]
+    @contact=info_arr[2]
+  end
 end
