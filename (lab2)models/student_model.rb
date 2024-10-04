@@ -19,7 +19,16 @@ class Student
       "#{key_name} : #{val}" unless val.nil? 
     end.compact.join("\n") 
   end
-  
+
+  def Student.is_phone?(phone)
+    !!(phone.to_s =~ /\A\+?\d{10,15}\z/)    
+  end
+
+  def phone=(value) 
+    @phone=nil   
+    Student.is_phone?(value) ?  @phone=value.to_s : raise("Incorrect phone #{value}") unless value.nil? || value.to_s==""
+  end
+
 
 end
 
