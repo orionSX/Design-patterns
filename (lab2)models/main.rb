@@ -13,4 +13,4 @@ puts st1.to_s
 puts "--------"
 puts st4.to_s
 puts st4.set_contacts(phone:"1234567899")
-puts st4.to_s
+puts st4.validate

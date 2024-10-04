@@ -39,46 +39,43 @@ class Student < StudentValidator
   end
  
   def set_contacts(phone: nil , tg: nil, git:nil, email:nil)
-    set_contact(:phone, phone) if phone
-    set_contact(:tg, tg) if tg
-    set_contact(:git, git) if git
-    set_contact(:email, email) if email
+    set_attribute(:phone, phone) if phone
+    set_attribute(:tg, tg) if tg
+    set_attribute(:git, git) if git
+    set_attribute(:email, email) if email
   end
 
   private
 
-  # Приватные сеттеры для каждого контакта
-  def set_contact(contact_name, value)
+  def set_attribute(attr_name, value)
     regex_map = {
-      phone: PHONE_REGEX,
+      email: EMAIL_REGEX,
       tg: TG_REGEX,
       git: GIT_REGEX,
-      email: EMAIL_REGEX
+      phone: PHONE_REGEX,
+      first_name: NAME_REGEX,
+      surname: NAME_REGEX,
+      last_name: NAME_REGEX
     }
 
-    regex = regex_map[contact_name]
-    raise "Validation not defined for #{contact_name}" unless regex
+    regex = regex_map[attr_name]
+    raise "Validation not defined for #{attr_name}" unless regex
 
     if valid?(value, regex)
-      instance_variable_set("@#{contact_name}", value.to_s)
-    else
-      raise "Incorrect #{contact_name}: #{value}"
-    end
-  end
-
-  # Приватный метод для установки ФИО
-  def set_fio(first_name, surname, last_name)
-    set_namestr(:first_name, first_name)
-    set_namestr(:surname, surname)
-    set_namestr(:last_name, last_name)
-  end
-
-  # Приватный метод для установки атрибута с валидацией
-  def set_namestr(attr_name, value)
-    if valid?(value, NAME_REGEX)
       instance_variable_set("@#{attr_name}", value.to_s)
     else
       raise "Incorrect #{attr_name}: #{value}"
     end
   end
+  
+ 
+
+  def set_fio(first_name, surname, last_name)
+    set_attribute(:first_name, first_name)
+    set_attribute(:surname, surname)
+    set_attribute(:last_name, last_name)
+  end
+
+ 
+ 
 end
