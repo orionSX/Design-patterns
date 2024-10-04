@@ -12,4 +12,4 @@ st4=Student.new(**st4_info)
 
 st4_s=StudentShort.new(student:st4)
 
-puts st4_s.to_s
+puts StudentBase.ancestors
