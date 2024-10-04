@@ -1,6 +1,6 @@
 
 
-class StudentValidator
+module StudentValidator
   NAME_REGEX= /\A[a-zA-Zа-яА-ЯёЁ'-]{1,50}\z/
   PHONE_REGEX=  /\A\+?\d{10,15}\z/
   EMAIL_REGEX= /\A[\w\-.]+@[a-zA-Z\d\-.]+\.[a-zA-Z]{2,}\z/
@@ -13,7 +13,8 @@ class StudentValidator
   end
 end
 
-class Student < StudentValidator
+class Student
+  include StudentValidator
   @@id = 0
 
   attr_reader :id, :email, :phone, :tg, :git
