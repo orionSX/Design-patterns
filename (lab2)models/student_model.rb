@@ -95,7 +95,9 @@ class Student < StudentBase
     set_attribute(:tg, tg) if tg
     set_attribute(:email, email) if email
   end
-
+  def set_git(git:nil)
+    set_attribute(:git,git) if git
+  end
   def change_fio(first_name: nil , last_name: nil,surname:nil)
     set_attribute(:first_name, first_name) if first_name
     set_attribute(:last_name, last_name) if last_name
