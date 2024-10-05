@@ -7,7 +7,7 @@ class StudentShort < StudentBase
     if student      
       super(id:student.id,git:student.git)
       short_setter(student.get_info)
-    elsif id && student_info
+    elsif id && student_str
       super(id:id)
       short_setter(student_str)
     end
