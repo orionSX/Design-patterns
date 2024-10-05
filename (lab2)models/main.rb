@@ -1,5 +1,5 @@
-require_relative "student_model"
-require_relative "student_short"
+require_relative "student/student_model.rb"
+require_relative "student/student_short.rb"
 st4_info={
    id:2, surname:"ZXC",first_name:"ASD",last_name:"FFFF",phone: "12345678910",git:"https://github.com/orionSX"
 }
