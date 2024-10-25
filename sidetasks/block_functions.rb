@@ -60,9 +60,7 @@ def srar_not_prime_gt_srar_prime(arr)
         yield(srar_ans)
     end
 end
-def main
-  
-  
+def main 
     puts "Выберите задачу:"
     puts "8. Найти индексы двух наименьших элементов массива."
     puts "20. Найти пропущенные элементы в массиве."

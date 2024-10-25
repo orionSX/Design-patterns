@@ -120,11 +120,11 @@ class Tag
       end
     
     def has_children?
-    !@children.empty?
+        !@children.empty?
     end
 
     def children_count
-    @children.size
+        @children.size
     end
 
     def to_html(indent_level = 0)
