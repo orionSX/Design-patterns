@@ -33,7 +33,7 @@ class HTMLTree
       end
     end
     def parse_html(html_string)
-    elements = parse_elements(html_string.strip)
+        elements = parse_elements(html_string.strip)
     
         if elements.size == 1
             elements.first
@@ -87,7 +87,11 @@ class HTMLTree
     def to_html
         @root.to_html
     end
-    
+    def each(type: :root_DFS,&block)
+        self.send(type,&block)
+      end
+  
+  
   end
   
 

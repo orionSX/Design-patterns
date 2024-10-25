@@ -68,7 +68,9 @@ class BinaryStudentTree
         queue.push(node.right)
       end
     end
-  
+    def each(type: :DFS_rec,&block)
+        self.send(type,&block)
+      end
   
   
   end

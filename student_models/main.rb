@@ -23,9 +23,4 @@ student_objects.each do |student|
    
    tree.add_student(student)
  end
- puts tree.root.student.to_s
- puts "Обход в глубину (DFS):"
- tree.DFS_rec { |x| puts x.date_of_birth}
- 
- puts "\nОбход в ширину (BFS):"
- tree.BFS { |x| puts x.date_of_birth}
+tree.each(type: :BFS){|x| puts x.date_of_birth}
