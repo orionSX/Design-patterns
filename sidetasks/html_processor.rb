@@ -68,6 +68,7 @@ class HTMLTree
 
                 tags << tag
                 html_string.sub!(full_tag, '').strip
+            
             else
                 break
             end
@@ -128,7 +129,6 @@ class Tag
         
        
         opening_tag = "#{indent}<#{@name}#{' ' unless attrs.empty?}#{attrs}>"
-    
         if @children.any?
          
           inner_html = @children.map { |child| child.to_html(indent_level + 1) }.join("\n")
@@ -162,5 +162,6 @@ body.add_child(p)
 div.add_child(span)
 
 html_string = '<div class="container"><p>Hello</p><span>World</span></div><div class="container"><p>Hello</p><span>World</span></div>'
+
 tree = HTMLTree.new(html_string)
 puts tree.to_html

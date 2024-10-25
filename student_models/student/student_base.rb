@@ -1,5 +1,5 @@
 require_relative "student_validator.rb"
-
+require 'date'
 class StudentBase
 include StudentValidator
 
@@ -31,6 +31,12 @@ include StudentValidator
       "#{key_name}: #{val}" unless val.nil? || val.to_s.empty?
     end.compact.join("\n")
   end
+  def contact
+    return "Phone: #{@phone}" if @phone 
+    return "Email: #{@email}" if @email 
+    return "Telegram: #{@tg}" if @tg     
+    ""
+  end
   private
   def set_attribute(attr_name, value)
     regex_map = {
@@ -43,16 +49,18 @@ include StudentValidator
       last_name: NAME_REGEX,
       contact: ANY_REGEX,
       fio:ANY_REGEX,
+      date_of_birth:DATE_REGEX
     }
 
     regex = regex_map[attr_name]
     raise "Validation not defined for #{attr_name}" unless regex
 
     if valid?(value, regex)
+      
       instance_variable_set("@#{attr_name}", value.to_s)
     else
       raise "Incorrect #{attr_name}: #{value}"
     end
   end
- 
+  
 end
