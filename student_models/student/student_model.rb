@@ -38,7 +38,7 @@ class Student < StudentBase
   def get_info
     fio = "#{@surname} #{initials}"
     git_info = git.nil? ? "Github is not set" : "#{@git}" 
-    contact_info = contact
+    contact_info = self.contact
 
     "#{fio}\t#{git_info}\t#{contact_info}"
   end
