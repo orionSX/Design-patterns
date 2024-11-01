@@ -19,7 +19,7 @@ class MyArrayProcessor
             yield slice if block_given?
             i += slice_size
         end
-    result
+        result
     end
     
      
@@ -146,3 +146,4 @@ class MyArrayProcessorAutoTest
 end
 
 MyArrayProcessorAutoTest.run_tests
+

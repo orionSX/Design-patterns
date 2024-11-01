@@ -31,28 +31,14 @@ class BinaryStudentTree
       node
     end
   
-    def DFS_rec(node = @root, &block)
+    def DFS(node = @root, &block)
       return if node.nil?
   
       block.call(node.student)
-      DFS_rec(node.left, &block)
-      DFS_rec(node.right, &block)
+      DFS(node.left, &block)
+      DFS(node.right, &block)
     end
   
-    def DFS_stack
-      stack = []
-      stack.push(@root)
-  
-      while !stack.empty?
-        node = stack.pop
-        next if node.nil?
-  
-        yield node.student
-  
-        stack.push(node.right) 
-        stack.push(node.left)
-      end
-    end
   
     def BFS
       queue = []
@@ -68,7 +54,7 @@ class BinaryStudentTree
         queue.push(node.right)
       end
     end
-    def each(type: :DFS_rec,&block)
+    def each(type: :DFS,&block)
         self.send(type,&block)
       end
   

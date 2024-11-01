@@ -34,7 +34,7 @@ class HTMLTree
     end
     def parse_html(html_string)
         elements = parse_elements(html_string.strip)
-    
+        
         if elements.size == 1
             elements.first
         else
@@ -128,7 +128,7 @@ class Tag
     end
 
     def to_html(indent_level = 0)
-        indent = '  ' * indent_level 
+        indent = "  " * indent_level 
         attrs = @attributes.map { |key, value| "#{key}=\"#{value}\"" }.join(" ")
         
        
@@ -161,8 +161,8 @@ span = Tag.new(name:'span', content: 'zxcvzxcvzxct')
 
 
 html.add_child(body)
-body.add_child(div)
-body.add_child(p)
+body.add_child([div,p])
+
 div.add_child(span)
 
 html_string = '<div class="container"><p>Hello</p><span>World</span></div><div class="container"><p>Hello</p><span>World</span></div>'

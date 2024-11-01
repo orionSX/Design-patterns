@@ -14,6 +14,7 @@ students = [
   { surname: "QAZ", first_name: "Z", last_name: "X", date_of_birth: '17.07.2003' }
 ]
 
+
 student_objects = students.map do |info|
   student = Student.new(**info)
  

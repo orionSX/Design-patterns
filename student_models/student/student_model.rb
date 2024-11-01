@@ -15,7 +15,7 @@ class Student < StudentBase
 
   end
 
-  def set_contacts(phone: nil , tg: nil, git:nil, email:nil)
+  def set_contacts(phone: nil , tg: nil,  email:nil)
     set_attribute(:phone, phone) if phone
     set_attribute(:tg, tg) if tg
     set_attribute(:email, email) if email
@@ -33,22 +33,7 @@ class Student < StudentBase
     set_attribute(:first_name, first_name) if first_name
     set_attribute(:last_name, last_name) if last_name
     set_attribute(:surname, surname) if surname
-  end
-
-  def get_info
-    fio = "#{@surname} #{initials}"
-    git_info = git.nil? ? "Github is not set" : "#{@git}" 
-    contact_info = self.contact
-
-    "#{fio}\t#{git_info}\t#{contact_info}"
-  end
-
-  def initials
-    "#{@first_name[0]}.#{@last_name[0]}."
-  end
-
-  
-
+  end 
  
 end
 

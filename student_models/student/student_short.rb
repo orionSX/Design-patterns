@@ -1,6 +1,6 @@
 require_relative "student_base.rb"
 class StudentShort < StudentBase
-  attr_reader  :fio, :contact
+  attr_reader  :FIO
 
   def initialize(student: nil, id: nil, student_str: nil)
     
@@ -16,9 +16,8 @@ class StudentShort < StudentBase
   private
   def short_setter(info)
     info_arr=info.split("\t")
-    set_attribute(:fio,info_arr[0])
-    set_attribute(:git,info_arr[1])
-    set_attribute(:contact,info_arr[2])
- 
+    set_attribute(:FIO,info_arr[0])
+    set_attribute(:git,info_arr[1] )
+    set_attribute(:contact,info_arr[2]) 
   end
 end

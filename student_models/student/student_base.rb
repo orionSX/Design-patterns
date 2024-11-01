@@ -10,7 +10,7 @@ include StudentValidator
     set_attribute(:git,git) if git
   end
   
-  def validate
+  def validate?
     s=instance_variables.map do |key|
       val = instance_variable_get(key)
       key_name = key.to_s.delete_prefix('@')
@@ -34,8 +34,20 @@ include StudentValidator
   def contact
     return "Phone: #{@phone}" if @phone 
     return "Email: #{@email}" if @email 
-    return "Telegram: #{@tg}" if @tg     
+    return "Telegram: #{@tg}" if @tg   
+    return @contact if @contact  
     ""
+  end
+  def get_info
+    if @FIO
+      fio=self.FIO
+    else
+      fio="#{@surname} #{@first_name[0]}.#{@last_name[0]}."
+    end
+    git_info = self.git.to_s
+    contact_info = self.contact
+
+    "#{fio}\t#{git_info}\t#{contact_info}"
   end
   private
   def set_attribute(attr_name, value)
@@ -48,7 +60,7 @@ include StudentValidator
       surname: NAME_REGEX,
       last_name: NAME_REGEX,
       contact: ANY_REGEX,
-      fio:ANY_REGEX,
+      FIO:ANY_REGEX,
       date_of_birth:DATE_REGEX
     }
 
@@ -62,5 +74,6 @@ include StudentValidator
       raise "Incorrect #{attr_name}: #{value}"
     end
   end
+  
   
 end
