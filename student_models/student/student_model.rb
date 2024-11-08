@@ -1,7 +1,7 @@
 
 require_relative "student_base.rb"
 class Student < StudentBase 
- 
+ include Comparable
   attr_reader  :email, :phone, :tg,:first_name,:surname,:last_name,:date_of_birth
 
   def initialize(first_name:nil, surname:nil, last_name:nil,phone: nil, tg: nil, git: nil, email: nil,id:nil,date_of_birth:nil)
@@ -13,6 +13,10 @@ class Student < StudentBase
     set_date_of_birth(date_of_birth:date_of_birth)
     set_contacts(phone: phone, tg: tg, email: email)   
 
+  end
+
+  def <=>(stud)
+    Date.parse(self.date_of_birth) <=> Date.parse(stud.date_of_birth) 
   end
 
   def set_contacts(phone: nil , tg: nil,  email:nil)
