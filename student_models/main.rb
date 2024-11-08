@@ -19,9 +19,9 @@ student_objects = students.map do |info|
   student = Student.new(**info)
  
 end
-tree = BinaryStudentTree.new
+tree = BST.new
 student_objects.each do |student|
    
-   tree.add_student(student)
+   tree.add_data(student)
  end
 tree.each(type: :BFS){|x| puts x.date_of_birth}

@@ -1,32 +1,32 @@
-class BinaryStudentTree
+class BST
     include Enumerable
   
     attr_accessor :root
   
-    def initialize(student=nil)
-      @root = Node.new(student) if student
+    def initialize(data=nil)
+      @root = Node.new(data) if data
     end
   
     class Node
-      attr_accessor :student, :left, :right
-      def initialize(student)
-        @student = student
+      attr_accessor :data, :left, :right
+      def initialize(data)
+        @data=data
         @left = nil
         @right = nil
       end
     end
   
-    def add_student(student)
-      @root = add_to_tree(@root, student)
+    def add_data(data)
+      @root = add_to_tree(@root, data)
     end
   
-    def add_to_tree(node, student)
-      return Node.new(student) if node.nil?
+    def add_to_tree(node, data)
+      return Node.new(data) if node.nil?
   
-      if Date.parse(student.date_of_birth) <= Date.parse(node.student.date_of_birth)
-        node.left = add_to_tree(node.left, student)
+    if data<= node.data
+        node.left = add_to_tree(node.left, data)
       else
-        node.right = add_to_tree(node.right, student)
+        node.right = add_to_tree(node.right, data)
       end
       node
     end
@@ -34,7 +34,7 @@ class BinaryStudentTree
     def DFS(node = @root, &block)
       return if node.nil?
   
-      block.call(node.student)
+      block.call(node.data)
       DFS(node.left, &block)
       DFS(node.right, &block)
     end
@@ -48,7 +48,7 @@ class BinaryStudentTree
         node = queue.shift
         next if node.nil?
   
-        yield node.student
+        yield node.data
   
         queue.push(node.left)
         queue.push(node.right)
