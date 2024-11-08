@@ -2,7 +2,7 @@ class MyArrayProcessor
     attr_reader :array
 
     def initialize(array:nil)
-        @array = array.freeze
+      @array = array
     end    
     
       
@@ -38,14 +38,26 @@ class MyArrayProcessor
         max_element
     end
     
-
-    def sort_by
-        return self.array.sort unless block_given?
-
-        self.array.sort {|a,b|  yield(a) <=> yield(b)}      
-  
+    def sort_by 
+      while true 
+        swapped = false
+      (0...@array.size-1).each do |i|
+          if block_given?
+            if yield(@array[i]) > yield(@array[i + 1])
+              @array[i], @array[i + 1] = @array[i + 1], @array[i]
+              swapped = true
+            end
+          else
+            if @array[i] > @array[i + 1]
+              @array[i], @array[i + 1] = @array[i + 1], @array[i]
+              swapped = true
+            end
+          end
+        end
+        break unless swapped
+      end
+      @array
     end
-
   
     def cycle(n=nil)
         raise ArgumentError, "block should be given" if !block_given?
