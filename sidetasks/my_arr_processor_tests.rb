@@ -32,7 +32,7 @@ class MyArrayProcessorTest < Minitest::Test
   end
 
   def test_inject
-    sum = @array_processor.inject(0) { |acc, x| acc + x }
+    sum = @array_processor.inject { |acc, x| acc + x }
     assert_equal 15, sum
   end
 

@@ -75,7 +75,7 @@ class MyArrayProcessor
     end
 
  
-    def inject(initial=self.array[0])
+    def inject(initial=0)
         accumulator = initial
         self.array.each do |element|
             accumulator = yield(accumulator, element)
