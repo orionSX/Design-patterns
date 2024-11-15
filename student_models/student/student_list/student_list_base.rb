@@ -32,7 +32,7 @@ class StudentsListBase
     short_list = selected_students.map do |student|
       StudentShort.new(student)
       end
-    DataListStudentShort.new(short_list)
+    data_list || DataListStudentShort.new(short_list)
   end
 
   def sort_by_surname_initials
