@@ -14,6 +14,9 @@ class Student < StudentBase
     set_contacts(phone: phone, tg: tg, email: email)   
 
   end
+  def to_h
+    {id:@id,first_name:@first_name,surname:@surname,last_name:@last_name,phone:@phone,tg:@tg,git:@git,email:@email,date_of_birth:@date_of_birth}
+  end
 
   def <=>(stud)
     Date.parse(self.date_of_birth) <=> Date.parse(stud.date_of_birth) 

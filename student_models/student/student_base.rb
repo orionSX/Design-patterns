@@ -4,6 +4,7 @@ class StudentBase
 include StudentValidator
 
   attr_reader :id,:git
+  attr_accessor :id
 
   def initialize(id:nil,git:nil)
     @id=id.to_i
@@ -39,15 +40,21 @@ include StudentValidator
     ""
   end
   def get_info
+    fio=self.get_fio
+    git_info = self.git.to_s
+    contact_info = self.contact
+
+    "#{fio}\t#{git_info}\t#{contact_info}"
+  end
+
+  def get_fio
+
     if @FIO
       fio=self.FIO
     else
       fio="#{@surname} #{@first_name[0]}.#{@last_name[0]}."
     end
-    git_info = self.git.to_s
-    contact_info = self.contact
 
-    "#{fio}\t#{git_info}\t#{contact_info}"
   end
   private
   def set_attribute(attr_name, value)
