@@ -4,9 +4,9 @@ class DataListStudentShort < DataList
     ['№', 'FIO', 'git','contact']
   end
 
-  def get_data
+  def get_data(start)
     data = self.selected.map.with_index do |item, index|
-      [index, item.FIO, item.git,item.contact]
+      [start + index, item.FIO, item.git,item.contact]
     end
     data
   end

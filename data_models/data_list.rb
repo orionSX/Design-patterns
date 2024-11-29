@@ -1,10 +1,11 @@
 require_relative 'deep_copy.rb'
 require_relative 'data_table.rb'
 class DataList
-  def initialize(items)
+  def initialize(items,start_index=0)
     raise ArgumentError, 'Items must be an array' unless items.is_a?(Array)
     @items = items
     @selected = []
+    @start_index=start_index
   end
 
   def select(number)
@@ -19,7 +20,7 @@ class DataList
   def proceed_data_table
     dt=[]
     dt << self.get_names
-    dt.concat(self.get_data)
+    dt.concat(self.get_data(@start_index))
     DataTable.new(dt)
   end
 
