@@ -22,7 +22,7 @@ class StudentsListBase
     @strategy.write(@file_path, @students.map(&:to_h))
   end
 
-  def get_student_by_id(id)
+  def get_student(id)
     @students.find { |student| student.id == id }
   end
 
@@ -32,12 +32,9 @@ class StudentsListBase
     short_list = selected_students.map do |student|
       StudentShort.new(student)
       end
-    data_list || DataListStudentShort.new(short_list)
+    data_list || DataListStudentShort.new(short_list,start_index)
   end
 
-  def sort_by_surname_initials
-    @students.sort_by { |variable| variable.get_fio }
-  end
 
   def add_student(student)
     student.id = next_id
@@ -45,7 +42,7 @@ class StudentsListBase
     write_all
   end
 
-  def replace_student_by_id(id, new_student)
+  def update_student(id, new_student)
     index = @students.find_index { |student| student.id == id }
     raise IndexError,'out of range' unless index
 

@@ -4,7 +4,7 @@ class StudentsListDB
   @client = DatabaseConnection.instance
   end
 
-  def find_student_by_id(id)
+  def get_student(id)
     result = @client.query("SELECT * FROM student WHERE id = #{id}").first
     Student.new(**result.transform_keys(&:to_sym)) if result
   end
@@ -28,7 +28,7 @@ VALUES ('#{student.surname}', '#{student.first_name}', '#{student.last_name}', '
     @client.last_id
   end
 
-  def update_student_by_id(id, updated_student)
+  def update_student(id, updated_student)
     query = <<-SQL
       UPDATE student
       SET surname='#{updated_student.surname}', first_name='#{updated_student.first_name}', last_name='#{updated_student.last_name}',
