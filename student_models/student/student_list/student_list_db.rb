@@ -4,12 +4,12 @@ class StudentsListDB
   @client = DatabaseConnection.instance
   end
 
-  def get_student(id)
+  def get_student(id) 
     result = @client.query("SELECT * FROM student WHERE id = #{id}").first
     Student.new(**result.transform_keys(&:to_sym)) if result
   end
 
-  def get_k_n_student_short_list(k, n)
+  def get_k_n_student_short_list(k, n,data_list=nil,filters=nil)
     offset = (k - 1) * n
     query = "SELECT * FROM student LIMIT #{n} OFFSET #{offset}"
     results = @client.query(query).map do |row|

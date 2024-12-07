@@ -2,6 +2,7 @@
 require 'json'
 require 'yaml'
 require_relative '../../../data_models/data_list_student_short.rb'
+require_relative '../filters/filters.rb'
 
 class StudentsListBase
   attr_reader :students
@@ -26,9 +27,13 @@ class StudentsListBase
     @students.find { |student| student.id == id }
   end
 
-  def get_k_n_student_short_list(k, n, data_list = nil)
+  def get_k_n_student_short_list(k, n, data_list = nil,filters=nil)
     start_index = (k - 1) * n
-    selected_students = @students[start_index, start_index+n] || []
+
+    filter_sequence=FilterDecorator.new(filters)
+    filtered_students=filter_sequence.apply(@students)
+    selected_students =filtered_students[start_index, start_index+n] || []
+    
     short_list = selected_students.map do |student|
       StudentShort.new(student)
       end
