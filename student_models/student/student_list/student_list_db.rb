@@ -9,12 +9,18 @@ class StudentsListDB
     Student.new(**result.transform_keys(&:to_sym)) if result
   end
 
-  def get_k_n_student_short_list(k, n,data_list=nil,filters=nil)
+  def get_k_n_student_short_list(k, n,data_list=nil,filters=[])
     offset = (k - 1) * n
     query = "SELECT * FROM student LIMIT #{n} OFFSET #{offset}"
     results = @client.query(query).map do |row|
-      StudentShort.new(Student.new(**row.transform_keys(&:to_sym)))
+     Student.new(**row.transform_keys(&:to_sym))
     end
+    filter_sequence=FilterDecorator.new(filters)
+    filtered_students=filter_sequence.apply(results)
+    results=filtered_students.map do |st|
+      StudentShort.new(st)
+    end
+    
     DataListStudentShort.new(results)
 
   end

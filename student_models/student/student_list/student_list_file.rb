@@ -27,7 +27,7 @@ class StudentsListBase
     @students.find { |student| student.id == id }
   end
 
-  def get_k_n_student_short_list(k, n, data_list = nil,filters=nil)
+  def get_k_n_student_short_list(k, n, data_list = nil,filters=[])
     start_index = (k - 1) * n
 
     filter_sequence=FilterDecorator.new(filters)

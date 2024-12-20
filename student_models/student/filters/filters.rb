@@ -4,16 +4,7 @@ class Filter
     end
   end
   
-  class AgeFilter < Filter
-    def initialize(min_age, max_age)
-      @min_age = min_age
-      @max_age = max_age
-    end
-  
-    def apply(students)
-      students.select { |s| s.age.between?(@min_age, @max_age) }
-    end
-  end
+
   class NameFilter < Filter
     def initialize(first_name)
         @first_name=first_name      
@@ -43,7 +34,7 @@ class Filter
   end
   
   class FilterDecorator < Filter
-    def initialize(*filters)
+    def initialize(*filters=[])
         @filters = filters
       end
     
