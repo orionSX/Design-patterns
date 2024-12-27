@@ -2,6 +2,7 @@
 require 'json'
 require 'yaml'
 require_relative '../../../data_models/data_list_student_short.rb'
+require_relative '../filters/filters.rb'
 
 class StudentsListBase
   attr_reader :students
@@ -22,22 +23,23 @@ class StudentsListBase
     @strategy.write(@file_path, @students.map(&:to_h))
   end
 
-  def get_student_by_id(id)
+  def get_student(id)
     @students.find { |student| student.id == id }
   end
 
-  def get_k_n_student_short_list(k, n, data_list = nil)
+  def get_k_n_student_short_list(k, n, data_list = nil,filters=[])
     start_index = (k - 1) * n
-    selected_students = @students[start_index, start_index+n] || []
+
+    filter_sequence=FilterDecorator.new(filters)
+    filtered_students=filter_sequence.apply(@students)
+    selected_students =filtered_students[start_index, start_index+n] || []
+    
     short_list = selected_students.map do |student|
       StudentShort.new(student)
       end
-    data_list || DataListStudentShort.new(short_list)
+    data_list || DataListStudentShort.new(short_list,start_index)
   end
 
-  def sort_by_surname_initials
-    @students.sort_by { |variable| variable.get_fio }
-  end
 
   def add_student(student)
     student.id = next_id
@@ -45,7 +47,7 @@ class StudentsListBase
     write_all
   end
 
-  def replace_student_by_id(id, new_student)
+  def update_student(id, new_student)
     index = @students.find_index { |student| student.id == id }
     raise IndexError,'out of range' unless index
 
