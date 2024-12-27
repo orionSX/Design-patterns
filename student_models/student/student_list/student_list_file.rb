@@ -42,16 +42,26 @@ class StudentsListBase
 
 
   def add_student(student)
+    @students.each do |st|
+      if !st.phone.nil? && st.phone==student.phone || !st.tg.nil? && st.tg==student.tg || !st.email.nil? && st.email==student.email || !st.git.nil? && st.git==student.git
+        raise "Contact exists"
+      end
+    end
     student.id = next_id
     @students << student
     write_all
   end
 
-  def update_student(id, new_student)
+  def update_student(id, student)
     index = @students.find_index { |student| student.id == id }
     raise IndexError,'out of range' unless index
 
-    @students[index] = new_student
+    @students.each do |st|
+      if !st.phone.nil? && st.phone==student.phone || !st.tg.nil? && st.tg==student.tg || !st.email.nil? && st.email==student.email || !st.git.nil? && st.git==student.git
+        raise "Contact exists"
+      end
+    end
+    @students[index] = student
     write_all
     
   end

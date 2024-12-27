@@ -26,6 +26,14 @@ class StudentsListDB
   end
 
   def add_student(student)
+
+    results = @client.query("SELECT * FROM student")
+    results.each do |st|
+      Student.new(**st.transform_keys(&:to_sym))
+      if !st.phone.nil? && st.phone==student.phone || !st.tg.nil? && st.tg==student.tg || !st.email.nil? && st.email==student.email || !st.git.nil? && st.git==student.git
+        raise "Contact exists"
+      end
+    end
     query = <<-SQL
       INSERT INTO student (surname, first_name, last_name, date_of_birth, tg, email, git,phone)
 VALUES ('#{student.surname}', '#{student.first_name}', '#{student.last_name}', '#{student.date_of_birth}', '#{student.tg}', '#{student.email}', '#{student.git}','#{student.phone}')
@@ -34,11 +42,18 @@ VALUES ('#{student.surname}', '#{student.first_name}', '#{student.last_name}', '
     @client.last_id
   end
 
-  def update_student(id, updated_student)
+  def update_student(id, student)
+    results = @client.query("SELECT * FROM student")
+    results.each do |st|
+      Student.new(**st.transform_keys(&:to_sym))
+      if !st.phone.nil? && st.phone==student.phone || !st.tg.nil? && st.tg==student.tg || !st.email.nil? && st.email==student.email || !st.git.nil? && st.git==student.git
+        raise "Contact exists"
+      end
+    end
     query = <<-SQL
       UPDATE student
-      SET surname='#{updated_student.surname}', first_name='#{updated_student.first_name}', last_name='#{updated_student.last_name}',
-    date_of_birth='#{updated_student.date_of_birth}', tg='#{updated_student.tg}', email='#{updated_student.email}', git='#{updated_student.git}',phone='#{updated_student.phone}'
+      SET surname='#{student.surname}', first_name='#{student.first_name}', last_name='#{student.last_name}',
+    date_of_birth='#{student.date_of_birth}', tg='#{student.tg}', email='#{student.email}', git='#{student.git}',phone='#{student.phone}'
       WHERE id=#{id}
     SQL
     @client.query(query)
