@@ -5,16 +5,16 @@ class DataTable
     @data = data
   end
 
-  def get_element(row, col)
+  def get(row, col)
     raise ArgumentError, 'Invalid row or column' unless valid_index?(row, col)
     DeepCopy.copy(@data[row][col])
   end
 
-  def rows_count
+  def row_count
     @data.size
   end
 
-  def columns_count
+  def column_count
     @data.empty? ? 0 : @data[0].size
   end
 

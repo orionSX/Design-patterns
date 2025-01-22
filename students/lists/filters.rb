@@ -2,7 +2,7 @@ class Filter
     def apply(students)
       students
     end
-  end
+end
   
 
   class NameFilter < Filter
@@ -34,14 +34,19 @@ class Filter
   end
   
   class FilterDecorator < Filter
-    def initialize(*filters=[])
+    def initialize(*filters)
+      
         @filters = filters
-      end
+    end
     
-      def apply(students)
-        @filters.reduce(students) do |filtered_students, filter|
-          filter.apply(filtered_students)
+    def apply(students)
+      @filters.reduce(students) do |filtered_students, filter|
+        begin
+        filter.apply(filtered_students)
+        rescue
+          filtered_students
         end
       end
-  end
-  
+    end
+     
+  end 

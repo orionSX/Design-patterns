@@ -1,8 +1,9 @@
 
 require 'json'
 require 'yaml'
-require_relative '../../../data_models/data_list_student_short.rb'
-require_relative '../filters/filters.rb'
+require_relative 'data_list_student_short.rb'
+require_relative '../models/student_short.rb'
+require_relative 'filters.rb'
 
 class StudentsListBase
   attr_reader :students
@@ -22,22 +23,26 @@ class StudentsListBase
   def write_all
     @strategy.write(@file_path, @students.map(&:to_h))
   end
-
+  def sort_by_fio!
+    @students.sort_by! { |student| student.get_fio }
+  end
   def get_student(id)
     @students.find { |student| student.id == id }
   end
 
-  def get_k_n_student_short_list(k, n, data_list = nil,filters=[])
+  def get_k_n_student_short_list(k, n, data_list =nil,filters=[])
     start_index = (k - 1) * n
 
-    filter_sequence=FilterDecorator.new(filters)
-    filtered_students=filter_sequence.apply(@students)
-    selected_students =filtered_students[start_index, start_index+n] || []
+    filter_sequence=FilterDecorator.new(filters)    
+
+    
+    selected_students = @students[start_index, start_index+n] || []
     
     short_list = selected_students.map do |student|
-      StudentShort.new(student)
+      StudentShort.new(student:student)
       end
-    data_list || DataListStudentShort.new(short_list,start_index)
+    data_list ||= DataListStudentShort.new(short_list,start_index)
+    data_list
   end
 
 
